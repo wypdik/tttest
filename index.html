@@ -16,6 +16,7 @@
   var pick = 0;
   var bool = 0;
   var max = 50.00;
+  var m = 0;
   var gx = 0; var gy = 0; var gz = 0;
 
   var s = new String("");
@@ -47,11 +48,11 @@
               bool = 1;
             }
             if(Math.abs(x) > max){
-              max = Math.abs(x) ;
+              m = Math.abs(x) ;
             }
 
             if(Math.abs(x) <= max && bool == 1){
-              max = max -15;
+              max = m -15;
               bool = 0;
             }
 
