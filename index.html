@@ -10,10 +10,12 @@
     <div id="result_gyro"></div>
 
   <script>
-  var cnt = 0;
+  var normal_cnt = 0;
+  var kecak_cnt = 0;
   var m_cnt = 0;
   var pick = 0;
   var bool = 0;
+  var max = 50.00;
   var s = new String("");
   const countUp = () => {
     pick = m_cnt;
@@ -29,17 +31,22 @@
             var y = event.accelerationIncludingGravity.y;
             var z = event.accelerationIncludingGravity.z;
             m_cnt ++;
-            if(Math.abs(x) > 50.00 && bool == 0){
-              cnt ++;
-              if(x > 50.00){
+
+            if(Math.abs(x) > max && bool == 0){
+              if(Math.abs(z) > 40.00){
+                kecak_cnt++;
+              }else{
+                normal_cnt ++;
+              }
+              if(x > max){
                 s += "+";
-              }else if(x < -50.00){
+              }else if(x < -max){
                 s += "-";
               }
               bool = 1;
             }
 
-            if(Math.abs(x) <= 50.00 && bool == 1){
+            if(Math.abs(x) <= max && bool == 1){
               bool = 0;
             }
 
@@ -48,7 +55,8 @@
             "X：" + x.toFixed(2) +"(m/s^2)<br />" +
             "Y：" + y.toFixed(2) +"(m/s^2)<br />" +
             "Z：" + z.toFixed(2) +"(m/s^2)<br /><br />" +
-            "振った回数: " + cnt +"回"+"!"+s+"!<br />" +
+            "振った回数(normal): " + normal_cnt +"回"+"!"+s+"!<br />" +
+            "振った回数(kecak): " + kecak_cnt +"回"+"<br />" +
             "更新回数:" + pick;
           });
 
