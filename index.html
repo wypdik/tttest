@@ -18,6 +18,7 @@
   const countUp = () => {
     pick = m_cnt;
   }
+  setInterval(countUp, 1000);
   function deviceMotionRequest () {
     if (DeviceMotionEvent.requestPermission) {
       DeviceMotionEvent.requestPermission()
@@ -28,7 +29,6 @@
             var y = event.accelerationIncludingGravity.y;
             var z = event.accelerationIncludingGravity.z;
             m_cnt ++;
-            setInterval(countUp, 1000);
             if(Math.abs(x) > 50.00 && bool == 0){
               cnt ++;
               if(x > 50.00){
