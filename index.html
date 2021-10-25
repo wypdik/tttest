@@ -32,10 +32,24 @@
             var x = event.accelerationIncludingGravity.x;
             var y = event.accelerationIncludingGravity.y;
             var z = event.accelerationIncludingGravity.z;
-            gx = x;
-            gy = y;
-            gz = z;
             m_cnt ++;
+            if(Math.abs(gx) > max && bool == 0){
+              if(Math.abs(gz) > 40.00){
+                kecak_cnt++;
+              }else{
+                normal_cnt ++;
+              }
+              if(gx > max){
+                s += "+";
+              }else if(gx < -max){
+                s += "-";
+              }
+              bool = 1;
+            }
+
+            if(Math.abs(x) <= max && bool == 1){
+              bool = 0;
+            }
 
             var result1 = document.getElementById( "result_acc" );
             result1.innerHTML = "重力加速度<br />" +
@@ -69,6 +83,24 @@
         var z = event.accelerationIncludingGravity.z;
         m_cnt ++;
 
+        if(Math.abs(x) > max && bool == 0){
+          if(Math.abs(z) > 40.00){
+            kecak_cnt++;
+          }else{
+            normal_cnt ++;
+          }
+          if(x > max){
+            s += "+";
+          }else if(x < -max){
+            s += "-";
+          }
+          bool = 1;
+        }
+
+        if(Math.abs(x) <= max && bool == 1){
+          bool = 0;
+        }
+
         var result1 = document.getElementById( "result_acc" );
         result1.innerHTML = "重力加速度<br />" +
         "X：" + x.toFixed(2) +"(m/s^2)<br />" +
@@ -79,23 +111,7 @@
       });
     }
   }
-  if(Math.abs(gx) > max && bool == 0){
-    if(Math.abs(gz) > 40.00){
-      kecak_cnt++;
-    }else{
-      normal_cnt ++;
-    }
-    if(gx > max){
-      s += "+";
-    }else if(gx < -max){
-      s += "-";
-    }
-    bool = 1;
-  }
 
-  if(Math.abs(x) <= max && bool == 1){
-    bool = 0;
-  }
   </script>
 </body>
 </html>
