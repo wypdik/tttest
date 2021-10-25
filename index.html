@@ -48,12 +48,11 @@
             }
 
             if(Math.abs(x) <= max && bool == 1){
-              max = max-10;
               bool = 0;
             }
 
             if(Math.abs(x) > max){
-              max = x;
+              max = Math.abs(x) ;
             }
 
             var result1 = document.getElementById( "result_acc" );
