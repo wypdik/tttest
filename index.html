@@ -3,11 +3,14 @@
   <title>DeviceMotion Test</title>
 </head>
 <body>
-  <div>
-    <button onClick="deviceMotionRequest()">Click</button><br></div>
-    <div id="result_acc"></div>
-    <br />
-    <div id="result_gyro"></div>
+  <div><button onClick="deviceMotionRequest_test()">加速度測定Click</button><br></div>
+  <div><button onClick="deviceMotionRequest()">サイリウムClick</button><br></div>
+  <p id="Terminal"></p>
+
+
+  <div id="result_acc"></div>
+  <br />
+  <div id="result_gyro"></div>
 
   <script>
   var normal_cnt = 0;
@@ -17,7 +20,20 @@
   var bool = 0;
   var max = 50.00;
   var m = 0;
-  var gx = 0; var gy = 0; var gz = 0;
+
+  var ta = document.getElementById('Terminal')
+  var msg = ""
+  var ut = navigator.userAgent;
+
+  if(ut.indexOf('iPhone') > 0 || ut.indexOf('iPod') > 0 || ut.indexOf('iPad') > 0){
+    "iphone";
+  }else if(ut.indexOf('Android') > 0 ||ut.indexOf('Android') > 0 && ut.indexOf('Mobile') > 0){
+    "android";
+  }else{
+    "PC";
+  }
+
+  ta.textContent = msg;
 
   var s = new String("");
   const countUp = () => {
@@ -30,16 +46,28 @@
       .then(permissionState => {
         if (permissionState === 'granted') {
           window.addEventListener( "devicemotion", function( event ){
+            window.addEventListener( "devicemotion", function( event ){
+              var x = event.accelerationIncludingGravity.x;
+              var y = event.accelerationIncludingGravity.y;
+              var z = event.accelerationIncludingGravity.z;
+            }
+          }
+        }
+      }
+    }
+  }
+  function deviceMotionRequest () {
+    if (DeviceMotionEvent.requestPermission) {
+      DeviceMotionEvent.requestPermission()
+      .then(permissionState => {
+        if (permissionState === 'granted') {
+          window.addEventListener( "devicemotion", function( event ){
             var x = event.accelerationIncludingGravity.x;
             var y = event.accelerationIncludingGravity.y;
             var z = event.accelerationIncludingGravity.z;
             m_cnt ++;
             if(Math.abs(x) > max && bool == 0){
-              if(Math.abs(z) > 40.00){
-                kecak_cnt++;
-              }else{
-                normal_cnt ++;
-              }
+              normal_cnt ++;
               if(x > max){
                 s += "+";
               }else if(x < -max){
@@ -47,12 +75,8 @@
               }
               bool = 1;
             }
-            if(Math.abs(x) > max){
-              m = Math.abs(x) ;
-            }
 
             if(Math.abs(x) <= max && bool == 1){
-              max = m -15;
               bool = 0;
             }
 
@@ -90,11 +114,7 @@
         m_cnt ++;
 
         if(Math.abs(x) > max && bool == 0){
-          if(Math.abs(z) > 40.00){
-            kecak_cnt++;
-          }else{
-            normal_cnt ++;
-          }
+          normal_cnt ++;
           if(x > max){
             s += "+";
           }else if(x < -max){
@@ -102,12 +122,8 @@
           }
           bool = 1;
         }
-        if(Math.abs(x) > max){
-          max = Math.abs(x) ;
-        }
 
         if(Math.abs(x) <= max && bool == 1){
-          max = max -15;
           bool = 0;
         }
 
@@ -123,5 +139,5 @@
   }
 
   </script>
-</body>
-</html>
+  </body>
+  </html>
