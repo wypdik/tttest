@@ -26,11 +26,11 @@
   var ut = navigator.userAgent;
 
   if(ut.indexOf('iPhone') > 0 || ut.indexOf('iPod') > 0 || ut.indexOf('iPad') > 0){
-    "iphone";
+    msg="iphone";
   }else if(ut.indexOf('Android') > 0 ||ut.indexOf('Android') > 0 && ut.indexOf('Mobile') > 0){
-    "android";
+    msg="android";
   }else{
-    "PC";
+    msg="PC";
   }
 
   ta.textContent = msg;
