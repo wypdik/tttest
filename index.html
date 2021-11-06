@@ -46,14 +46,12 @@
       .then(permissionState => {
         if (permissionState === 'granted') {
           window.addEventListener( "devicemotion", function( event ){
-            window.addEventListener( "devicemotion", function( event ){
-              var x = event.accelerationIncludingGravity.x;
-              var y = event.accelerationIncludingGravity.y;
-              var z = event.accelerationIncludingGravity.z;
-            }
-          }
+            var x = event.accelerationIncludingGravity.x;
+            var y = event.accelerationIncludingGravity.y;
+            var z = event.accelerationIncludingGravity.z;
+          });
         }
-      }
+      })
     }
   }
   function deviceMotionRequest () {
