@@ -52,7 +52,7 @@
             var ty = event.accelerationIncludingGravity.y;
             var tz = event.accelerationIncludingGravity.z;
 
-            if(msg.indexOg('ios')>0){
+            if(msg.indexOf('ios')>0){
               if(tmax > tx){
                 tmax = tx;
               }
@@ -77,7 +77,7 @@
         var ty = event.accelerationIncludingGravity.y;
         var tz = event.accelerationIncludingGravity.z;
 
-        if(msg.indexOg('ios')>0){
+        if(msg.indexOf('ios')>0){
           if(tmax > tx){
             tmax = tx;
           }
