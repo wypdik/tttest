@@ -19,18 +19,19 @@
   var pick = 0;
   var bool = 0;
   var max = 50.00;
+  var tmax = 0;
   var m = 0;
 
   var ta = document.getElementById('Terminal')
-  var msg = ""
+  var msg = "使用機種:"
   var ut = navigator.userAgent;
 
   if(ut.indexOf('iPhone') > 0 || ut.indexOf('iPod') > 0 || ut.indexOf('iPad') > 0){
-    msg="iphone";
+    msg+=":ios";
   }else if(ut.indexOf('Android') > 0 ||ut.indexOf('Android') > 0 && ut.indexOf('Mobile') > 0){
-    msg="android";
+    msg+="android";
   }else{
-    msg="PC";
+    msg+="PC";
   }
 
   ta.textContent = msg;
@@ -40,18 +41,45 @@
     pick = m_cnt;
   }
   setInterval(countUp, 1000);
-  function deviceMotionRequest () {
+  function deviceMotionRequest_test () {
     if (DeviceMotionEvent.requestPermission) {
       DeviceMotionEvent.requestPermission()
       .then(permissionState => {
         if (permissionState === 'granted') {
           window.addEventListener( "devicemotion", function( event ){
-            var x = event.accelerationIncludingGravity.x;
-            var y = event.accelerationIncludingGravity.y;
-            var z = event.accelerationIncludingGravity.z;
+            var tx = event.accelerationIncludingGravity.x;
+            var ty = event.accelerationIncludingGravity.y;
+            var tz = event.accelerationIncludingGravity.z;
+
+            if(msg.indexOg('ios')>0){
+              if(tmax > tx){
+                tmax = tx;
+              }
+            }else{
+              if(tmax < tx){
+                tmax = tx;
+              }
+            }
+
           });
         }
       })
+    }else{
+      window.addEventListener( "devicemotion", function( event ){
+        var tx = event.accelerationIncludingGravity.x;
+        var ty = event.accelerationIncludingGravity.y;
+        var tz = event.accelerationIncludingGravity.z;
+
+        if(msg.indexOg('ios')>0){
+          if(tmax > tx){
+            tmax = tx;
+          }
+        }else{
+          if(tmax < tx){
+            tmax = tx;
+          }
+        }
+      });
     }
   }
   function deviceMotionRequest () {
@@ -64,6 +92,7 @@
             var y = event.accelerationIncludingGravity.y;
             var z = event.accelerationIncludingGravity.z;
             m_cnt ++;
+            max = Math.abs(tmax) * 0.75;
             if(Math.abs(x) > max && bool == 0){
               normal_cnt ++;
               if(x > max){
@@ -110,7 +139,7 @@
         var y = event.accelerationIncludingGravity.y;
         var z = event.accelerationIncludingGravity.z;
         m_cnt ++;
-
+        max = Math.abs(tmax) * 0.75;
         if(Math.abs(x) > max && bool == 0){
           normal_cnt ++;
           if(x > max){
